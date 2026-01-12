@@ -1,3 +1,9 @@
+# Jujutsu VACUUM
+
+Workflow that some people use:
+https://v5.chriskrycho.com/journal/jujutsu-megamerges-and-jj-absorb/
+
+
 # Improving TimescaleDB write performance
 We were migrating some data out of a TimescaleDB instance, and to cut the story short we couldn't use any default migration method, such as pg_dump, logical replication. etc.
 

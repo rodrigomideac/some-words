@@ -8,3 +8,5 @@ categories: programming
 This post has some tips about claude code usage:
 
 Ref: https://sankalp.bearblog.dev/my-claude-code-experience-after-2-weeks-of-usage/
+
+this too: https://tokenbender.com/post.html?id=how-i-bring-the-best-out-of-claude-code
