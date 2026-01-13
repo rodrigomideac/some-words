@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Keeping it simple for my digital lige"
+title:  "Keeping it simple for my digital life -  Poor-man's UPS"
 date:   2026-01-12 13:00:00 -0300
 categories: homelab
 ---
