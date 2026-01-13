@@ -16,3 +16,4 @@ I am the father of two wonderful kids that I love to the deep of my heart. Surpr
 
 I like woodworking since I we bought a house and I found a way to save 50% for our custom built furniture, so you can expect to see some blog posts about that too.
 
+I don't like to read AI generated content, and I belive most people don't like either. So you can be sure that every single typo and every single word here are fruit of my own thoughts. 
