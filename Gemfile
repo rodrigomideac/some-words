@@ -8,6 +8,8 @@ source "https://rubygems.org"
 # This will help ensure the proper Jekyll version is running.
 # Happy Jekylling!
 gem "jekyll", "~> 4.3.4"
+# Lock to version 2.x to avoid sass-embedded and google-protobuf compatibility issues with Ruby 3.4
+gem "jekyll-sass-converter", "~> 2.2"
 # This is the default theme for new Jekyll sites. You may change this to anything you like.
 gem "minima", "~> 2.5"
 # If you want to use GitHub Pages, remove the "gem "jekyll"" above and
@@ -33,3 +35,9 @@ gem "wdm", "~> 0.1", :platforms => [:mingw, :x64_mingw, :mswin]
 gem "http_parser.rb", "~> 0.6.0", :platforms => [:jruby]
 
 gem "webrick", "~> 1.9"
+
+# Required for Ruby 3.4+ (no longer bundled by default)
+gem "csv"
+gem "logger"
+gem "base64"
+gem "bigdecimal"
