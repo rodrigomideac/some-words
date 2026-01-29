@@ -10,9 +10,10 @@ This is a Jekyll-based blog site called "Some words" - a personal blog for writi
 
 ### Development Server
 ```bash
-bundle exec jekyll serve
+make serve
 ```
-Starts the Jekyll development server with live reload.
+
+Starts the Jekyll development server with live reload, look at server_log.txt for its output.
 
 ### Build Site
 ```bash

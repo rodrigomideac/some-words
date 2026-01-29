@@ -1,0 +1,11 @@
+---
+---
+
+@import "minima";
+
+// Mobile-friendly tables with horizontal scroll
+.post-content table {
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}

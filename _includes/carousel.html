@@ -1,0 +1,329 @@
+{% assign letterstring = "a,b,c,d,e,f,g,h,i,j,k,l,m,n" %}
+{% assign letters = letterstring | split: ',' %}
+{% assign number = include.number | minus: 1 %}
+
+<div class="carousel__holder">
+    <div id="carousel{{ number }}" class="carousel">
+        {% for item in page.carousels[number].images %}
+          <input class="carousel__activator" type="radio" name="carousel{{ number }}" id="{{ number }}{{ letters[forloop.index0] }}" {% if forloop.first %}checked="checked"{% endif %} />
+        {% endfor %}
+        <div class="carousel__track">
+            {% for item in page.carousels[number].images %}
+            <li class="carousel__slide" style="background-image: url('{{ item.image }}');" data-image="{{ item.image }}" data-caption="{{ item.caption | default: '' }}">
+              {% if item.caption %}
+              <div class="carousel__caption">{{ item.caption }}</div>
+              {% endif %}
+            </li>
+            {% endfor %}
+        </div>
+        <div class="carousel__nav carousel__nav--left">
+          <span class="carousel__arrow carousel__arrow--left"></span>
+        </div>
+        <div class="carousel__nav carousel__nav--right">
+          <span class="carousel__arrow"></span>
+        </div>
+    </div>
+</div>
+
+<div id="lightbox{{ number }}" class="lightbox">
+    <div class="lightbox__backdrop"></div>
+    <div class="lightbox__content">
+        <button class="lightbox__close">&times;</button>
+        <button class="lightbox__nav lightbox__nav--prev">&lsaquo;</button>
+        <img class="lightbox__img" src="" alt="">
+        <button class="lightbox__nav lightbox__nav--next">&rsaquo;</button>
+        <div class="lightbox__caption"></div>
+    </div>
+</div>
+
+<style>
+.carousel__holder {
+  width: 100%;
+  position: relative;
+  padding-bottom: {{ include.height }}{{ include.unit }};
+  margin: 1rem 0;
+}
+.carousel {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  position: absolute;
+}
+.carousel__activator {
+  display: none;
+}
+{% for item in page.carousels[number].images %}
+.carousel__activator:nth-of-type({{ forloop.index }}):checked ~ .carousel__track {
+  transform: translateX(-{{ forloop.index0 }}00%);
+}
+{% endfor %}
+.carousel__track {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 0;
+  margin: 0;
+  transition: transform 0.5s ease;
+}
+.carousel__slide {
+  height: 100%;
+  position: absolute;
+  list-style: none;
+  background-size: cover;
+  background-position: center;
+  cursor: zoom-in;
+}
+{% for item in page.carousels[number].images %}
+.carousel__slide:nth-of-type({{ forloop.index }}) {
+  transform: translateX({{ forloop.index0 }}00%);
+  width: 100%;
+}
+{% endfor %}
+.carousel__caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.35);
+  color: #fff;
+  padding: 10px 15px;
+  font-size: 14px;
+  text-align: center;
+}
+.carousel__nav {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 15%;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+}
+.carousel__nav--left {
+  left: 0;
+  justify-content: flex-start;
+  padding-left: 15px;
+}
+.carousel__nav--right {
+  right: 0;
+  justify-content: flex-end;
+  padding-right: 15px;
+}
+.carousel__arrow {
+  width: 20px;
+  height: 20px;
+  border-right: 3px solid rgba(255, 255, 255, 0.7);
+  border-bottom: 3px solid rgba(255, 255, 255, 0.7);
+  transform: rotate(-45deg);
+  transition: border-color 0.2s;
+  filter: drop-shadow(0 0 2px rgba(0,0,0,0.5));
+}
+.carousel__arrow--left {
+  transform: rotate(135deg);
+}
+.carousel__nav:hover .carousel__arrow {
+  border-color: rgba(255, 255, 255, 1);
+}
+
+/* Lightbox */
+.lightbox {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.lightbox.lightbox--open {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.lightbox.lightbox--visible {
+  opacity: 1;
+}
+.lightbox__backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+}
+.lightbox__content {
+  position: relative;
+  max-width: 95vw;
+  max-height: 95vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.lightbox__img {
+  max-width: 95vw;
+  max-height: 90vh;
+  object-fit: contain;
+}
+.lightbox__close {
+  position: fixed;
+  top: 20px;
+  right: 30px;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 40px;
+  cursor: pointer;
+  z-index: 10001;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+.lightbox__close:hover {
+  opacity: 1;
+}
+.lightbox__nav {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: #fff;
+  font-size: 50px;
+  cursor: pointer;
+  padding: 20px 15px;
+  z-index: 10001;
+  opacity: 0.7;
+  transition: opacity 0.2s, background 0.2s;
+}
+.lightbox__nav:hover {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.2);
+}
+.lightbox__nav--prev {
+  left: 20px;
+}
+.lightbox__nav--next {
+  right: 20px;
+}
+.lightbox__caption {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+  font-size: 14px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 10px 20px;
+  max-width: 80%;
+}
+.lightbox__caption:empty {
+  display: none;
+}
+</style>
+
+<script>
+(function() {
+  var carousel = document.querySelector('#carousel{{ number }}');
+  var inputs = carousel.querySelectorAll('.carousel__activator');
+  var slides = carousel.querySelectorAll('.carousel__slide');
+  var navLeft = carousel.querySelector('.carousel__nav--left');
+  var navRight = carousel.querySelector('.carousel__nav--right');
+
+  var lightbox = document.querySelector('#lightbox{{ number }}');
+  var lightboxImg = lightbox.querySelector('.lightbox__img');
+  var lightboxCaption = lightbox.querySelector('.lightbox__caption');
+  var lightboxClose = lightbox.querySelector('.lightbox__close');
+  var lightboxBackdrop = lightbox.querySelector('.lightbox__backdrop');
+  var lightboxPrev = lightbox.querySelector('.lightbox__nav--prev');
+  var lightboxNext = lightbox.querySelector('.lightbox__nav--next');
+
+  var currentIndex = 0;
+
+  function getCurrentIndex() {
+    for (var i = 0; i < inputs.length; i++) {
+      if (inputs[i].checked) return i;
+    }
+    return 0;
+  }
+
+  function goNext(e) {
+    e.stopPropagation();
+    var next = (getCurrentIndex() + 1) % inputs.length;
+    inputs[next].checked = true;
+  }
+
+  function goPrev(e) {
+    e.stopPropagation();
+    var prev = (getCurrentIndex() - 1 + inputs.length) % inputs.length;
+    inputs[prev].checked = true;
+  }
+
+  navRight.addEventListener('click', goNext);
+  navLeft.addEventListener('click', goPrev);
+
+  // Lightbox
+  function openLightbox(index) {
+    currentIndex = index;
+    updateLightbox();
+    lightbox.classList.add('lightbox--open');
+    setTimeout(function() {
+      lightbox.classList.add('lightbox--visible');
+    }, 10);
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('lightbox--visible');
+    setTimeout(function() {
+      lightbox.classList.remove('lightbox--open');
+    }, 300);
+    document.body.style.overflow = '';
+  }
+
+  function updateLightbox() {
+    var slide = slides[currentIndex];
+    lightboxImg.src = slide.dataset.image;
+    lightboxCaption.textContent = slide.dataset.caption;
+  }
+
+  function lightboxNext() {
+    currentIndex = (currentIndex + 1) % slides.length;
+    updateLightbox();
+  }
+
+  function lightboxPrevFn() {
+    currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+    updateLightbox();
+  }
+
+  slides.forEach(function(slide, index) {
+    slide.addEventListener('click', function(e) {
+      if (e.target.closest('.carousel__nav')) return;
+      openLightbox(index);
+    });
+  });
+
+  lightboxClose.addEventListener('click', closeLightbox);
+  lightboxBackdrop.addEventListener('click', closeLightbox);
+  lightboxPrev.addEventListener('click', function(e) {
+    e.stopPropagation();
+    lightboxPrevFn();
+  });
+  lightboxNext.addEventListener('click', function(e) {
+    e.stopPropagation();
+    lightboxNext();
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (!lightbox.classList.contains('lightbox--open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') lightboxPrevFn();
+    if (e.key === 'ArrowRight') lightboxNext();
+  });
+})();
+</script>
