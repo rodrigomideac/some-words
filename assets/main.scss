@@ -3,6 +3,12 @@
 
 @import "minima";
 
+// Wrap long lines in code blocks instead of horizontal overflow
+pre, pre code {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
 // Mobile-friendly tables with horizontal scroll
 .post-content table {
   display: block;
